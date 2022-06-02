@@ -1,31 +1,26 @@
 #include "lists.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 /**
- * check_cycle - checks a list for a loop
- *
- * @list: list to be checked
- * Return: 1 if there is loop or 0 if otherwise
+ * check_cycle - checks to see if a list is in an endless loop or cycle
+ * @list: the list to check
+ * Return: 0 if no cycle is detected, 1 if there is a cycle
  */
 
 int check_cycle(listint_t *list)
 {
-	listint_t *tortoise, *hare;
+	listint_t *doub = list;
+	listint_t *reg = list;
 
-	if (!list || !list->next)
+	if (list == NULL)
 		return (0);
 
-	tortoise = hare = list;
-	tortoise = tortoise->next;
-	hare = hare->next->next;
-	while (tortoise && hare && hare->next)
+	while (doub && doub->next)
 	{
-		if (tortoise == hare)
-			return (1); /* Loop found */
-		tortoise = tortoise->next;
-		hare = hare->next->next;
-	}
+		reg = reg->next;
+		doub = doub->next->next;
 
+		if (reg == doub)
+			return (1);
+	}
 	return (0);
 }
